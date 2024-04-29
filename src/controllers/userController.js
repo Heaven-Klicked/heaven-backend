@@ -109,3 +109,25 @@ exports.registerUser = async (req, res) => {
       .send({ message: "Error registering user", success: false, error });
   }
 };
+
+exports.getUserProfiles = async (req, res) => {
+  const maxDistanceInMeters = 1000 * 1069;
+  try {
+    const { value, error } = Joi.object({
+      latitude: Joi.number(),
+      longitude: Joi.number().when("latitude", {
+        is: Joi.exist(),
+        then: Joi.required(),
+        otherwise: Joi.forbidden(),
+      }),
+    })
+      .min(1)
+      .required()
+      .validate(req.query);
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .send({ message: "Error logging in", success: false, error });
+  }
+};

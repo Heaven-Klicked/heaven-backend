@@ -17,8 +17,8 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  userBio: String,
-  specificFeaturePhoto: String,
+  userBio: { type: String, default: "" },
+  specificFeaturePhoto: { type: String },
   userPhotos: [String],
   favorites: [
     {
